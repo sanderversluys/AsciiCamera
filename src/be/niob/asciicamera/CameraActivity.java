@@ -14,10 +14,11 @@ import android.view.Window;
  *
  */
 public class CameraActivity extends Activity {
-    private static final String TAG            = "Sample::Activity";
+	
+    private static final String TAG = Util.TAG+":CameraActivity";
 
-    private MenuItem            mItemPreviewRGBA;
-    private MenuItem            mItemPreviewGray;
+    private MenuItem mItemPreviewRGBA;
+    private MenuItem mItemPreviewGray;
     private CameraView mView;
 
 

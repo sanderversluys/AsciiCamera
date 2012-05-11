@@ -22,7 +22,8 @@ import android.view.SurfaceView;
  *
  */
 public abstract class CameraViewBase extends SurfaceView implements SurfaceHolder.Callback, Runnable {
-    private static final String TAG = "Sample::SurfaceView";
+	
+    private static final String TAG = Util.TAG+":CameraViewBase";
 
     private Camera              mCamera;
     private SurfaceHolder       mHolder;

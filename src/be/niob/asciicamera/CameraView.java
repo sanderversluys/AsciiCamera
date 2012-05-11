@@ -11,7 +11,8 @@ import android.graphics.Bitmap;
  */
 class CameraView extends CameraViewBase {
 	
-	private static final String TAG = "Sample0View";
+	private static final String TAG = Util.TAG+":CameraViewBase";
+	
 	int mSize;
 	int[] mRGBA;
 	private Bitmap mBitmap;
