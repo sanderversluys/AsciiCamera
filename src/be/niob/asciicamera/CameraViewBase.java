@@ -155,7 +155,7 @@ public abstract class CameraViewBase extends SurfaceView implements SurfaceHolde
     /**
      * This method is called when preview is stopped. When this method is called the preview stopped and all the processing of frames already completed.
      * If the Bitmap object returned via processFrame is cached - it is a good time to recycle it.
-     * Any other resourcses used during the preview can be released.
+     * Any other resources used during the preview can be released.
      */
     protected abstract void onPreviewStopped();
 
