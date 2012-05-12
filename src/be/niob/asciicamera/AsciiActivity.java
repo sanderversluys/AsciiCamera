@@ -31,7 +31,7 @@ public class AsciiActivity extends Activity {
 	 		private Paint mPaint = new Paint();
 	 		private Bitmap bmp = null;
 	 		
-	 		private String[] ascii = " .`-_':,;^=+/\"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLunT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@KHDBWNMR0Q".split("");
+	 		private char[] ascii = " .`-_':,;^=+/\"|)\\<>)iv%xclrs{*}I?!][1taeo7zjLunT#JCwfy325Fp6mqSghVd4EgXPGZbYkOA&8U$@KHDBWNMR0Q".toCharArray();
 	 		
 	 		private static int SIDE = 20;
 
@@ -53,21 +53,13 @@ public class AsciiActivity extends Activity {
 				
 				for (int x=0; x<wx; x++) {
 					for (int y=0; y<wy; y++) {
-						
 						int p = bmp.getPixel(x*SIDE, y*SIDE+SIDE);
 						int r = Color.red(p);
 						int g = Color.green(p);
 						int b = Color.blue(p);
-						int l = (int) (0.2126 * r + 0.7152 * g + 0.0722 * b);
-						
-						String c = ascii[(l / 256) * ascii.length];
-						
-						//Log.d(TAG, ""+(lum / 256) * ascii.length);
-						Log.d(TAG, ":"+l);
-						
-						//mPaint.setColor(lum);
-						canvas.drawText("."+c, x*SIDE, y*SIDE+SIDE, mPaint);
-						
+						double l = (int) (0.2126 * r + 0.7152 * g + 0.0722 * b);
+						int pos = (int)((l / 256) * ascii.length);
+						canvas.drawText(Character.toString(ascii[pos]), x*SIDE, y*SIDE+SIDE, mPaint);
 					}
 				}
 			}
