@@ -19,6 +19,7 @@ public class CameraActivity extends Activity {
 
     private MenuItem mItemPreviewRGBA;
     private MenuItem mItemPreviewGray;
+    private MenuItem mItemPreviewAscii;
     private CameraView mView;
 
 
@@ -41,6 +42,7 @@ public class CameraActivity extends Activity {
         Log.i(TAG, "onCreateOptionsMenu");
         mItemPreviewRGBA = menu.add("Preview RGBA");
         mItemPreviewGray = menu.add("Preview GRAY");
+        mItemPreviewAscii = menu.add("Preview ASCII");
         return true;
     }
 
@@ -51,6 +53,8 @@ public class CameraActivity extends Activity {
         	mView.setViewMode(CameraView.VIEW_MODE_RGBA);
         else if (item == mItemPreviewGray)
         	mView.setViewMode(CameraView.VIEW_MODE_GRAY);
+        else if (item == mItemPreviewAscii)
+        	mView.setViewMode(CameraView.VIEW_MODE_ASCII);
         return true;
     }
 }

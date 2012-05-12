@@ -20,8 +20,8 @@ class CameraView extends CameraViewBase {
     
     public static final int     VIEW_MODE_RGBA = 0;
     public static final int     VIEW_MODE_GRAY = 1;
+    public static final int		VIEW_MODE_ASCII = 2;
     
-	
     public CameraView(Context context) {
         super(context);
         mSize = 0;
@@ -61,6 +61,8 @@ class CameraView extends CameraViewBase {
 
                     rgba[i * getFrameWidth() + j] = 0xff000000 + (b << 16) + (g << 8) + r;
                 }
+        } else if (view_mode == VIEW_MODE_ASCII) {
+        	
         }
         
         mBitmap.setPixels(rgba, 0/* offset */, getFrameWidth() /* stride */, 0, 0, getFrameWidth(), getFrameHeight());
