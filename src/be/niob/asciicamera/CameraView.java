@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.util.Log;
 
 /**
  * 
@@ -37,7 +38,7 @@ class CameraView extends CameraViewBase {
         mViewMode = VIEW_MODE_RGBA;
         
         mPaint = new Paint();
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.WHITE);
 		mPaint.setTypeface(Typeface.MONOSPACE);
 		mPaint.setTextSize(SIDE);
     }
@@ -81,38 +82,22 @@ class CameraView extends CameraViewBase {
         } else if (view_mode == VIEW_MODE_ASCII) {
         	
         	Canvas canvas = new Canvas(mBitmap);
-        	canvas.drawColor(Color.WHITE);
+        	canvas.drawColor(Color.BLACK);
         	
-        	for (int i = 0; i < frameSize; i++) {
-                int y = (0xff & ((int) data[i]));
-                rgba[i] = 0xff000000 + (y << 16) + (y << 8) + y;
-            }
-            mBitmap.setPixels(rgba, 0/* offset */, getFrameWidth() /* stride */, 0, 0, getFrameWidth(), getFrameHeight());
-        	
-        	/*int wx = mBitmap.getWidth() / SIDE;
-			int wy = mBitmap.getHeight() / SIDE;*/
-            
-            int wx = getFrameWidth() / SIDE;
-			int wy = getFrameHeight() / SIDE;
-        	
-        	for (int x=0; x<wx; x++) {
-				for (int y=0; y<wy; y++) {
-					
-					
-					
-					int p = mBitmap.getPixel(x*SIDE, y*SIDE+SIDE);
-					int r = Color.red(p);
-					int g = Color.green(p);
-					int b = Color.blue(p);
-					double l = (int) (0.2126 * r + 0.7152 * g + 0.0722 * b);
-					int pos = (int)((l / 256) * ascii.length);
-					canvas.drawText(Character.toString(ascii[pos]), x*SIDE, y*SIDE+SIDE, mPaint);
-					
-					//canvas.drawText("S", x*SIDE, y*SIDE+SIDE, mPaint);
-				}
-			}
-        	
-        	
+        	for (int i = 0; i < getFrameHeight(); i+=SIDE) {
+                for (int j = 0; j < getFrameWidth(); j+=SIDE) {
+                	int index = i * getFrameWidth() + j;
+                	//int supply_index = frameSize + (i >> 1) * getFrameWidth() + (j & ~1);
+                    int y = (0xff & ((int) data[index]));
+                    y = y < 16 ? 16 : y;
+                    rgba[i * getFrameWidth() + j] = 0xff000000 + (y << 16) + (y << 8) + y;
+                    
+                    int pos = (int)(((double)(y) / 256) * ascii.length);
+                    canvas.drawText(Character.toString(ascii[pos]), j, i, mPaint);
+                  
+                    //Log.d(Util.TAG, "char: "+ Character.toString(ascii[pos]));
+                }
+        	}
         	
         }
         

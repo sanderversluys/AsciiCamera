@@ -64,6 +64,9 @@ public abstract class CameraViewBase extends SurfaceView implements SurfaceHolde
             List<Camera.Size> sizes = params.getSupportedPreviewSizes();
             mFrameWidth = width;
             mFrameHeight = height;
+            
+            Log.d(Util.TAG, "frameWidth: " + mFrameWidth);
+            Log.d(Util.TAG, "frameHeight: " + mFrameHeight);
 
             // selecting optimal camera preview size
             {
