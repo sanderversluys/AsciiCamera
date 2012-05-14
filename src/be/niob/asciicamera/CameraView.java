@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
 
 /**
  * 
@@ -35,14 +34,14 @@ class CameraView extends CameraViewBase {
     public CameraView(Context context) {
         super(context);
         mSize = 0;
-        mViewMode = VIEW_MODE_RGBA;
+        mViewMode = VIEW_MODE_ASCII;
         
         mPaint = new Paint();
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(Color.GREEN);
 		mPaint.setTypeface(Typeface.MONOSPACE);
 		mPaint.setTextSize(SIDE);
     }
-
+    
     @Override
     protected Bitmap processFrame(byte[] data) {
         int frameSize = getFrameWidth() * getFrameHeight();
@@ -51,10 +50,41 @@ class CameraView extends CameraViewBase {
 
         final int view_mode = mViewMode;
         if (view_mode == VIEW_MODE_GRAY) {
-            for (int i = 0; i < frameSize; i++) {
+        	
+        	for (int i = 0; i < frameSize; i++) {
                 int y = (0xff & ((int) data[i]));
                 rgba[i] = 0xff000000 + (y << 16) + (y << 8) + y;
             }
+        	
+        	/*int min = 255;
+        	int max = 0;
+        	
+        	for (int i = 0; i < frameSize; i++) {
+                int y = (0xff & ((int) data[i]));
+                if (Math.abs(y)<min) min = y;
+                if (Math.abs(y)>min) max = y;
+        	}
+        	
+            for (int i = 0; i < frameSize; i++) {
+            	
+                int y = (0xff & ((int) data[i]));
+                
+                int diff = max - min;
+                
+                diff = contrast;
+                
+                //if (diff > 100)
+                	y = (int)(((double)(y) / 256) * diff);
+                
+                
+                //y = (int)((double)(y) - min / (double)(max - min));
+
+                rgba[i] = 0xff000000 + (y << 16) + (y << 8) + y;
+            }*/
+            
+            /*Log.d(Util.TAG, "max:"+h);
+            Log.d(Util.TAG, "min:"+l);*/
+            
             mBitmap.setPixels(rgba, 0/* offset */, getFrameWidth() /* stride */, 0, 0, getFrameWidth(), getFrameHeight());
         } else if (view_mode == VIEW_MODE_RGBA) {
             for (int i = 0; i < getFrameHeight(); i++) {
@@ -100,7 +130,6 @@ class CameraView extends CameraViewBase {
         	}
         	
         }
-        
         
         return mBitmap;
     }
